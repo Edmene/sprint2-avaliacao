@@ -3,7 +3,8 @@ const money_transaction = require('../controller/MoneyTransactionController')
 
 
 roteador.get('/money_transaction',money_transaction.listar)
-roteador.post('/money_transaction',money_transaction.inserir)
+roteador.post('/money_transaction', money_transaction.inserir)
+
 roteador.get('/money_transaction/:id',money_transaction.buscarId)
 roteador.get('/money_transaction/sender/:sender',money_transaction.buscarSender)
 roteador.get('/money_transaction/receiver/:receiver',money_transaction.buscarReceiver)

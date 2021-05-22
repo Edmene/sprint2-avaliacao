@@ -11,65 +11,73 @@ module.exports = {
         }
     },
     async inserir(req, res) {
-        try {
-          const money_transaction = await Money_transaction.create(req.body);
-    
-          return res.json(money_transaction);
+        try{
+          if(req.is('json')) {
+            const money_transaction = await Money_transaction.create(req.body)
+            res.status(201) 
+            return res.json(money_transaction)
+          }else{
+            res.status(400)
+            throw new Error('CONTENT-TYPE NAO ACEITO') 
+          } 
         } catch (err) {
-          return res.status(400).json({ error: err.message });
+          return res.status(400).json({ error: err.message })
         }
     },
     async buscarId(req, res) {
         try {
-          const money_transaction = await Money_transaction.findByPk(req.params.id);
+          const money_transaction = await Money_transaction.findByPk(req.params.id)
     
-          return res.json(money_transaction);
+          return res.json(money_transaction)
         } catch (err) {
-          return res.status(400).json({ error: err.message });
+          return res.status(400).json({ error: err.message })
         }
       },
     async buscarSender(req, res) {
         try {
-          const money_transaction = await Money_transaction.findOne({where:{sender:req.params.sender}});
+          const money_transaction = await Money_transaction.findOne({where:{sender:req.params.sender}})
           if(money_transaction == null){
             throw new Error("Sender not found!")
           }
-          return res.json(money_transaction);
+          return res.json(money_transaction)
         } catch (err) {
-          return res.status(400).json({ error: err.message });
+          return res.status(400).json({ error: err.message })
         }
       },
       async buscarReceiver(req, res) {
         try {
-          const money_transaction = await Money_transaction.findOne({where:{receiver:req.params.receiver}});
+          const money_transaction = await Money_transaction.findOne({where:{receiver:req.params.receiver}})
           if(money_transaction == null){
-            throw new Error("Sender not found!")
+            throw new Error("Receiver not found!")
           }
-          return res.json(money_transaction);
+          return res.json(money_transaction)
         } catch (err) {
-          return res.status(400).json({ error: err.message });
+          return res.status(400).json({ error: err.message })
         }
       },  
     async atualizar(req, res) {
         try {
-          const money_transaction = await Money_transaction.findByPk(req.params.id);
-    
-          await money_transaction.update(req.body);
-    
-          return res.json({ money_transaction });
+          if(req.is('json')){
+            const money_transaction = await Money_transaction.findByPk(req.params.id)
+            await money_transaction.update(req.body)
+            return res.json({ money_transaction })
+          }else{
+            res.status(400)
+            throw new Error('CONTENT-TYPE NAO ACEITO') 
+          }
         } catch (err) {
-          return res.status(400).json({ error: err.message });
+          return res.status(400).json({ error: err.message })
         }
       },
     async deletar(req, res) {
         try {
-          const money_transaction = await Money_transaction.findByPk(req.params.id);
+          const money_transaction = await Money_transaction.findByPk(req.params.id)
     
-          await money_transaction.destroy();
+          await money_transaction.destroy()
     
-          return res.json(money_transaction);
+          return res.json(money_transaction)
         } catch (err) {
-          return res.status(400).json({ error: err.message });
+          return res.status(400).json({ error: err.message })
         }
     }
 } 
