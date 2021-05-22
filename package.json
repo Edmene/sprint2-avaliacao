@@ -1,0 +1,26 @@
+{
+  "name": "sprint2-avaliacao",
+  "version": "1.0.0",
+  "description": "A avaliação será realizada pela entrega de uma API seguindo o padrão REST que deverá realizar as operações básicas de CRUD e duas consultas por atributos, totalizando assim quatro consultas: Todos os itens, um item e duas pesquisas por atributos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonardosantos1/sprint2-avaliacao.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonardosantos1/sprint2-avaliacao/issues"
+  },
+  "homepage": "https://github.com/leonardosantos1/sprint2-avaliacao#readme",
+  "dependencies": {
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  }
+}
