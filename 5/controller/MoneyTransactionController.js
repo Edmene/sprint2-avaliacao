@@ -1,7 +1,8 @@
 const Money_transaction = require('../database/ModeloTabelaMoney_Transaction')
 
 module.exports = {
-    async listar (req,res){
+    
+  async listar (req,res){
         try{
             const money_transaction = await Money_transaction.findAll()
 
@@ -10,7 +11,8 @@ module.exports = {
             return res.status(400).json({error:ValidationErrorItem.message})    
         }
     },
-    async inserir(req, res) {
+   
+  async inserir(req, res) {
         try{
           if(req.is('json')) {
             const money_transaction = await Money_transaction.create(req.body)
@@ -24,7 +26,8 @@ module.exports = {
           return res.status(400).json({ error: err.message })
         }
     },
-    async buscarId(req, res) {
+    
+  async buscarId(req, res) {
         try {
           const money_transaction = await Money_transaction.findByPk(req.params.id)
     
@@ -33,9 +36,10 @@ module.exports = {
           return res.status(400).json({ error: err.message })
         }
       },
-    async buscarSender(req, res) {
+   
+  async buscarSender(req, res) {
         try {
-          const money_transaction = await Money_transaction.findOne({where:{sender:req.params.sender}})
+          const money_transaction = await Money_transaction.findAll({where:{sender:req.params.sender}})
           if(money_transaction == null){
             throw new Error("Sender not found!")
           }
@@ -44,9 +48,10 @@ module.exports = {
           return res.status(400).json({ error: err.message })
         }
       },
-      async buscarReceiver(req, res) {
+    
+  async buscarReceiver(req, res) {
         try {
-          const money_transaction = await Money_transaction.findOne({where:{receiver:req.params.receiver}})
+          const money_transaction = await Money_transaction.findAll({where:{receiver:req.params.receiver}})
           if(money_transaction == null){
             throw new Error("Receiver not found!")
           }
@@ -55,7 +60,8 @@ module.exports = {
           return res.status(400).json({ error: err.message })
         }
       },  
-    async atualizar(req, res) {
+    
+  async atualizar(req, res) {
         try {
           if(req.is('json')){
             const money_transaction = await Money_transaction.findByPk(req.params.id)
@@ -69,7 +75,8 @@ module.exports = {
           return res.status(400).json({ error: err.message })
         }
       },
-    async deletar(req, res) {
+    
+  async deletar(req, res) {
         try {
           const money_transaction = await Money_transaction.findByPk(req.params.id)
     
