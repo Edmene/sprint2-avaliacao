@@ -21,6 +21,8 @@ app.use((req, res, prox) => {
         formatoRequisitado = 'application/json';
     }
 
+    console.log(formatosAceitos);
+
     //verifico se o formato do request é um formato aceito
     if(formatosAceitos.indexOf(formatoRequisitado) === -1){
         res

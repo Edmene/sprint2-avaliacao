@@ -57,11 +57,15 @@ roteador.patch('/:idProduto', async (req, res, prox) => {
     }
 });
 
-roteador.get('/:idProduto', async (req, res) => {
+roteador.get('/:idProduto', async (req, res, prox) => {
     try{
         const id = req.params.idProduto;
         const produto = new Produto({id:id});
         await produto.carregar();
+        const serializador = new SerializadorProduto(
+            res.getHeader("Content-Type"),
+            ["dataCriacao", "dataAtualizacao", "versao"]
+        );
         res
             .status(200)
             .send(
@@ -73,7 +77,7 @@ roteador.get('/:idProduto', async (req, res) => {
     }
 });
 
-roteador.delete('/:idProduto', async (req, res) => {
+roteador.delete('/:idProduto', async (req, res, prox) => {
     try{
         const id = req.params.idProduto;
         const produto = new Produto({id:id});
@@ -84,7 +88,7 @@ roteador.delete('/:idProduto', async (req, res) => {
             .status(204)
             .end();
     }catch(erro){
-        console.log(erro);
+        prox(erro);
     }
 });
 

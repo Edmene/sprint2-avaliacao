@@ -14,12 +14,18 @@ class Serializador{
 
 //estendo as minhas funcionalidades
 
-class SerializadorFornecedor extends Serializador{
+class SerializadorProduto extends Serializador{
     constructor(contentType, camposExtras){
         super();
         this.contentType = contentType;
         this.camposPublicos = [
-            'id', 'name', 'price', 'category', 'weight'
+            "id", "name", "price", "category", "weight"
         ].concat(camposExtras || []);
     }
 }
+
+module.exports = {
+    Serializador: Serializador,
+    SerializadorProduto: SerializadorProduto,
+    formatosAceitos:["application/json"]
+};
