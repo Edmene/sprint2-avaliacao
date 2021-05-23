@@ -9,5 +9,18 @@ module.exports = {
     inserir(produto){
         //realizo a inserção no bd utilizando o create do sequelize
         return TabelaProduto.create(produto);
+    },
+    async pegarId(id){
+        const encontradoId = await TabelaProduto.findOne({
+            where: {
+                id : id
+            }
+        });
+
+        if(!encontradoId){
+            throw new Error("Id não encontrado");
+        }
+
+        return encontradoId;
     }
 }
