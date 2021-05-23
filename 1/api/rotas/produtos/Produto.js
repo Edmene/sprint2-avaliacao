@@ -86,7 +86,6 @@ class Produto{
         const camposNumeros = ["price", "weight"];
 
         camposStrings.forEach(campo => {
-            console.log("Estou no string no campo " + campo);
             const valor = this[campo];
             if(typeof valor !== 'string' || valor.length === 0){
                 if(campo != "category"){
@@ -96,7 +95,6 @@ class Produto{
         });
 
         camposNumeros.forEach(campo => {
-            console.log("Estou no int no campo " + campo);
             const valor = this[campo];
             if(typeof valor !== 'number' || valor <= 0){
                 throw new CampoInvalido(campo);

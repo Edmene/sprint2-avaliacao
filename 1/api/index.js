@@ -2,6 +2,8 @@ const express = require("express");
 const config = require("config");
 const criaTabelas = require('./bd/criarTabelas');
 const formatosAceitos = require("./Serializador").formatosAceitos;
+const NaoEncontrado = require("./erros/NaoEncontrado");
+const SerializadorErro = require("./Serializador").SerializadorErro;
 
 const app = express();
 
@@ -34,6 +36,31 @@ app.use((req, res, prox) => {
     //defino o content-type do meu cabeçalho
     res.setHeader("Content-Type", formatoRequisitado);
     prox();
+});
+
+app.use((erro, req, res, prox) => {
+    let status = 500;
+
+    if(erro instanceof NaoEncontrado){
+        status = 404;
+    }
+
+    if(erro instanceof CampoInvalido || erro instanceof DadosNaoFornecidos){
+        status = 400;
+    }
+
+    const serializador = new SerializadorErro(
+        res.getHeader('Content-Type')
+    );
+
+    res
+        .status(status)
+        .send(
+            serializador.serializar({
+                mensagem: erro.message,
+                id: erro.idErro
+            })
+        );
 });
 
 const roteador = require("./rotas/produtos/roteamento");
