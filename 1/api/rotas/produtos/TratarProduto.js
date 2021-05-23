@@ -10,10 +10,7 @@ module.exports = {
         //realizo a inserção no bd utilizando o create do sequelize
         return TabelaProduto.create(produto);
     },
-<<<<<<< HEAD
-    //eu tinha esquecido de criar uma feature para ele e fazer separadamente em uma branch
-=======
->>>>>>> feature/pegar_produto
+
     async pegarId(id){
         const encontradoId = await TabelaProduto.findOne({
             where: {
@@ -26,7 +23,6 @@ module.exports = {
         }
 
         return encontradoId;
-<<<<<<< HEAD
     },
 
     atualizar(id, dados){
@@ -37,7 +33,11 @@ module.exports = {
                 where:{id : id}   
             }
         );
-=======
->>>>>>> feature/pegar_produto
+    },
+
+    remover(id){
+        TabelaProduto.destroy({
+            where: {id : id}
+        });
     }
 }

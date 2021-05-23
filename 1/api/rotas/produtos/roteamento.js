@@ -71,4 +71,19 @@ roteador.get('/:idProduto', async (req, res) => {
     }
 });
 
+roteador.delete('/:idProduto', async (req, res) => {
+    try{
+        const id = req.params.idProduto;
+        const produto = new Produto({id:id});
+        //verifico se existe um produto na minha lista
+        await produto.carregar();
+        await produto.deletar();
+        res
+            .status(204)
+            .end();
+    }catch(erro){
+        console.log(erro);
+    }
+});
+
 module.exports = roteador;

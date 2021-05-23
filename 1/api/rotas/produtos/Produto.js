@@ -56,6 +56,10 @@ class Produto{
 
         await TratarProduto.atualizar(this.id ,dados);
     }
+
+    deletar(){
+        return TratarProduto.remover(this.id);
+    }
 }
 
 module.exports = Produto;
