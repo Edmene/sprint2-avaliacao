@@ -4,7 +4,7 @@ const instancia = require("../../bd/conexao");
 
 //crio as colunas da tabela produto, especificando o tipo, tamanho e se pode ser null
 const colunas = {
-    nome: {
+    name: {
         type: Sequelize.STRING(100),
         allowNull: false
     },
@@ -30,9 +30,9 @@ const opcoes = {
     freezeTableName: true,
     tableName: "product",
     timestamps: true,
-    createdAt: 'dataCriacao',
-    updatedAt: 'dataAtualizacao',
-    version: 'versao'
+    createdAt: 'createdDate',
+    updatedAt: 'updatedDate',
+    version: 'version'
 };
 
 //crio a tabela no banco de dados

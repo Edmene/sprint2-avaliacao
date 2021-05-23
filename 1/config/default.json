@@ -1,7 +1,7 @@
 {
     "mysql":{
         "comentario":"Configurações do banco de dados",
-        "bd": "petshop",
+        "bd": "evaluation",
         "usuario": "root",
         "senha": "123456",
         "host": "localhost"
