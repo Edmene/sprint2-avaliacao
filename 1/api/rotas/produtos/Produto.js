@@ -1,3 +1,5 @@
+const DadosNaoFornecidos = require("../../erros/DadosNaoFornecidos");
+const CampoInvalido = require("../../erros/CampoInvalido");
 const TratarProduto = require("./TratarProduto");
 
 //Crio o meu objeto produto
@@ -15,12 +17,14 @@ class Produto{
 
     async criar(){
         this.validar();
+        //insiro os dados colocados manualmente
         const resultado = await TratarProduto.inserir({
             name: this.name,
             price: this.price,
             category: this.category,
             weight: this.weight
         });
+        //pego os dados criados automaticamente
         this.id = resultado.id;
         this.createdDate = resultado.createdDate;
         this.updatedDate = resultado.updatedDate;
@@ -30,6 +34,7 @@ class Produto{
    
 
     async carregar(){
+        //carrego o meu produto pela id
         const produto = await TratarProduto.pegarId(this.id);
         this.name = produto.name;
         this.price = produto.price;
@@ -41,7 +46,9 @@ class Produto{
     }
 
     async atualizar(){
+        //
         await TratarProduto.pegarId(this.id);
+        //separo quem vai ser número e quem vai ser string para ser possível a verificação
         const camposStrings = ["name", "category"];
         const camposNumeros = ["price", "weight"];
         const dados = {};
@@ -63,7 +70,7 @@ class Produto{
 
         //verifico se os dados foram fornecidos
         if(Object.keys(dados).length === 0){
-            throw new Error("Dados não foram fornecidos");
+            throw new DadosNaoFornecidos();
         }
 
         await TratarProduto.atualizar(this.id ,dados);
@@ -83,7 +90,7 @@ class Produto{
             const valor = this[campo];
             if(typeof valor !== 'string' || valor.length === 0){
                 if(campo != "category"){
-                    throw new Error(`O campo '${campo}' está invalido`);
+                    throw new CampoInvalido(campo);
                 }
             }
         });
@@ -92,7 +99,7 @@ class Produto{
             console.log("Estou no int no campo " + campo);
             const valor = this[campo];
             if(typeof valor !== 'number' || valor <= 0){
-                throw new Error(`O campo '${campo}' está invalido`);
+                throw new CampoInvalido(campo);
             }
         });
     }

@@ -1,4 +1,5 @@
 const TabelaProduto = require("./TabelaProduto");
+const NaoEncontrado = require("../../erros/NaoEncontrado")
 
 module.exports = {
     listar(){
@@ -13,13 +14,11 @@ module.exports = {
 
     async pegarId(id){
         const encontradoId = await TabelaProduto.findOne({
-            where: {
-                id : id
-            }
+            where: {id : id}
         });
 
         if(!encontradoId){
-            throw new Error("Id não encontrado");
+            throw new NaoEncontrado();
         }
 
         return encontradoId;
@@ -29,9 +28,7 @@ module.exports = {
         //atualizo os dados no meu banco de dados
         return TabelaProduto.update(
             dados,
-            {
-                where:{id : id}   
-            }
+            {where:{id : id}}
         );
     },
 
