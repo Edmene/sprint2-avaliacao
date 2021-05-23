@@ -3,7 +3,7 @@ const paginacao = require('../paginacao')
 
 
 module.exports = {
-    
+  //metodo que lista todos os registros do banco   
   async listar (req,res){
         try{
           const{pagina, tamanho} = req.query
@@ -17,7 +17,8 @@ module.exports = {
             return res.status(400).json({error:err.message})    
         }
     },
-   
+
+  //metodo que insere um novo registro no banco 
   async inserir(req, res) {
         try{
           if(req.is('json')) {
@@ -33,6 +34,7 @@ module.exports = {
         }
     },
     
+  //metodo que busca pelo atributo id os registro no banco  
   async buscarId(req, res) {
         try {
           const money_transaction = await Money_transaction.findByPk(req.params.id)
@@ -43,6 +45,7 @@ module.exports = {
         }
       },
    
+  //metodo que busca pelo atributo sender os registro no banco    
   async buscarSender(req, res) {
         try {
           const{pagina, tamanho} = req.query
@@ -57,6 +60,7 @@ module.exports = {
         }
     },
     
+  //metodo que busca pelo atributo receiver os registro no banco    
   async buscarReceiver(req, res) {
         try {
           const{pagina, tamanho} = req.query
@@ -71,6 +75,7 @@ module.exports = {
         }
     },  
     
+  //metodo que atualiza informacoes de um registro no banco  
   async atualizar(req, res) {
         try {
           if(req.is('json')){
@@ -86,6 +91,7 @@ module.exports = {
         }
     },
     
+  //metodo que delete um registro do banco  
   async deletar(req, res) {
         try {
           const money_transaction = await Money_transaction.findByPk(req.params.id)

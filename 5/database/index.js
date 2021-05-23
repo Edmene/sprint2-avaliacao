@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const conexao = new Sequelize(
     'evaluation',
     'root',
-    'admin',
+    'sua senha',
     {
         host:'localhost',
         dialect:"mysql"
