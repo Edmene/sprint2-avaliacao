@@ -1,41 +1,46 @@
 const TratarProduto = require("./TratarProduto");
 const Produto = require("./Produto");
+const SerializadorProduto = require("../../Serializador").SerializadorProduto;
 
 //separo uma rota do arquivo da api
 const roteador = require("express").Router();
 
 //retorno a minha lista de produtos
 roteador.get('/', async (req, res) => {
-    try{
-        const resultados = await TratarProduto.listar();
-        res
-            .status(200)
-            .send(
-                JSON.stringify(resultados)
-            );
-    }catch(erro){
-        console.log(erro);
-    } 
+    
+    const resultados = await TratarProduto.listar();
+    const serializador = new SerializadorProduto(
+        res.getHeader("Content-Type")
+    );
+    res
+        .status(200)
+        .send(
+            serializador.serializar(resultados)
+        );
 });
 
-roteador.post('/', async (req, res) => {
+roteador.post('/', async (req, res, prox) => {
     try{
         //recupero os dados do meu request
         const dados = req.body;
         const produto = new Produto(dados);
         await produto.criar();
+        const serializador = new SerializadorProduto(
+            res.getHeader("Content-Type")
+        );
         res
             .status(201)
             .send(
-                JSON.stringify(produto)
+                serializador.serializar(produto)
             );
     }catch(erro){
-        console.log(erro);
+        //jogo para a proxíma função
+        prox(erro);
     }
 });
 
 //Atualizo um produto
-roteador.patch('/:idProduto', async (req, res) => {
+roteador.patch('/:idProduto', async (req, res, prox) => {
     try{
         const id = req.params.idProduto;
         //recebo o que vai ser atualizado
@@ -46,12 +51,9 @@ roteador.patch('/:idProduto', async (req, res) => {
         await produto.atualizar();
         res
             .status(204)
-            .send(
-                JSON.stringify(produto)
-            )
             .end();
     }catch(erro){
-        console.log(erro);
+        prox(erro);
     }
 });
 
@@ -63,11 +65,11 @@ roteador.get('/:idProduto', async (req, res) => {
         res
             .status(200)
             .send(
-                JSON.stringify(produto)
+                serializador.serializar(produto)
             );
 
     }catch(erro){
-        console.log(erro);
+        prox(erro);
     }
 });
 
