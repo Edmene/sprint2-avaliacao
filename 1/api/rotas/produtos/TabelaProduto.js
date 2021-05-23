@@ -6,7 +6,7 @@ const instancia = require("../../bd/conexao");
 const colunas = {
     name: {
         type: Sequelize.STRING(100),
-        allowNull: false
+        allowNull: false,
     },
     price: {
         type: Sequelize.DOUBLE(100, 2),

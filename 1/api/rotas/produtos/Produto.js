@@ -14,6 +14,7 @@ class Produto{
     }
 
     async criar(){
+        this.validar();
         const resultado = await TratarProduto.inserir({
             name: this.name,
             price: this.price,
@@ -25,6 +26,8 @@ class Produto{
         this.updatedDate = resultado.updatedDate;
         this.version = resultado.version;
     }
+
+   
 
     async carregar(){
         const produto = await TratarProduto.pegarId(this.id);
@@ -39,12 +42,21 @@ class Produto{
 
     async atualizar(){
         await TratarProduto.pegarId(this.id);
-        const campos = ["name", "price", "category", "weight"];
+        const camposStrings = ["name", "category"];
+        const camposNumeros = ["price", "weight"];
         const dados = {};
-        campos.forEach((campo) => {
+        camposStrings.forEach((campo) => {
             //pego o valor do campo
             const valor = this[campo];
             if(typeof valor === "string" && valor.length > 0){
+                dados[campo] = valor;
+            }
+        });
+
+        camposNumeros.forEach((campo) => {
+            //pego o valor do campo
+            const valor = this[campo];
+            if(typeof valor === "number" && valor.length > 0){
                 dados[campo] = valor;
             }
         });
@@ -59,6 +71,30 @@ class Produto{
 
     deletar(){
         return TratarProduto.remover(this.id);
+    }
+
+     //validar se os dados recebidos pelo cadastro são válidos
+    validar(){
+        const camposStrings = ["name", "category"];
+        const camposNumeros = ["price", "weight"];
+
+        camposStrings.forEach(campo => {
+            console.log("Estou no string no campo " + campo);
+            const valor = this[campo];
+            if(typeof valor !== 'string' || valor.length === 0){
+                if(campo != "category"){
+                    throw new Error(`O campo '${campo}' está invalido`);
+                }
+            }
+        });
+
+        camposNumeros.forEach(campo => {
+            console.log("Estou no int no campo " + campo);
+            const valor = this[campo];
+            if(typeof valor !== 'number' || valor <= 0){
+                throw new Error(`O campo '${campo}' está invalido`);
+            }
+        });
     }
 }
 
