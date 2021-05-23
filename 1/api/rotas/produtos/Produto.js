@@ -25,6 +25,26 @@ class Produto{
         this.dataAtualizacao = resultado.dataAtualizacao;
         this.versao = resultado.versao;
     }
+
+    async atualizar(){
+        await TratarProduto.pegarId(this.id);
+        const campos = ["name", "price", "category", "weight"];
+        const dados = {};
+        campos.forEach((campo) => {
+            //pego o valor do campo
+            const valor = this[campo];
+            if(typeof valor === "string" && valor.length > 0){
+                dados[campo] = valor;
+            }
+        });
+
+        //verifico se os dados foram fornecidos
+        if(Object.keys(dados).length === 0){
+            throw new Error("Dados não foram fornecidos");
+        }
+
+        await TratarProduto.atualizar(this.id ,dados);
+    }
 }
 
 module.exports = Produto;

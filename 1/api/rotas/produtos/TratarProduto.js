@@ -9,5 +9,29 @@ module.exports = {
     inserir(produto){
         //realizo a inserção no bd utilizando o create do sequelize
         return TabelaProduto.create(produto);
+    },
+    //eu tinha esquecido de criar uma feature para ele e fazer separadamente em uma branch
+    async pegarId(id){
+        const encontradoId = await TabelaProduto.findOne({
+            where: {
+                id : id
+            }
+        });
+
+        if(!encontradoId){
+            throw new Error("Id não encontrado");
+        }
+
+        return encontradoId;
+    },
+
+    atualizar(id, dados){
+        //atualizo os dados no meu banco de dados
+        return TabelaProduto.update(
+            dados,
+            {
+                where:{id : id}   
+            }
+        );
     }
 }

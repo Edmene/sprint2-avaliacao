@@ -34,4 +34,25 @@ roteador.post('/', async (req, res) => {
     }
 })
 
+//Atualizo um produto
+roteador.patch('/:idProduto', async (req, res) => {
+    try{
+        const id = req.params.idProduto;
+        //recebo o que vai ser atualizado
+        const dadosRecebidos = req.body;
+        //junto os dados recebidos em um novo objeto, passando o id daquele objeto
+        const dados = Object.assign({}, dadosRecebidos, {id:id});
+        const produto = new Produto(dados);
+        await produto.atualizar();
+        res
+            .status(204)
+            .send(
+                JSON.stringify(produto)
+            )
+            .end()
+    }catch(erro){
+        console.log(erro);
+    }
+});
+
 module.exports = roteador;
