@@ -32,7 +32,7 @@ roteador.post('/', async (req, res) => {
     }catch(erro){
         console.log(erro);
     }
-})
+});
 
 //Atualizo um produto
 roteador.patch('/:idProduto', async (req, res) => {
@@ -49,7 +49,23 @@ roteador.patch('/:idProduto', async (req, res) => {
             .send(
                 JSON.stringify(produto)
             )
-            .end()
+            .end();
+    }catch(erro){
+        console.log(erro);
+    }
+});
+
+roteador.get('/:idProduto', async (req, res) => {
+    try{
+        const id = req.params.idProduto;
+        const produto = new Produto({id:id});
+        await produto.carregar();
+        res
+            .status(200)
+            .send(
+                JSON.stringify(produto)
+            );
+
     }catch(erro){
         console.log(erro);
     }
