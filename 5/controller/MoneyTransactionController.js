@@ -1,14 +1,20 @@
 const Money_transaction = require('../database/ModeloTabelaMoney_Transaction')
+const paginacao = require('../paginacao')
+
 
 module.exports = {
     
   async listar (req,res){
         try{
-            const money_transaction = await Money_transaction.findAll()
-
-            return res.json(money_transaction)
-        }catch(erro){
-            return res.status(400).json({error:ValidationErrorItem.message})    
+          const{pagina, tamanho} = req.query
+          const{limit, offset} = paginacao.getPaginacao(pagina,tamanho)
+          
+          await Money_transaction.findAndCountAll({limit, offset}).
+          then(dados => {
+              const response = paginacao.paginacaoDados(dados,pagina,limit)
+              res.send(response)})
+        }catch(err){
+            return res.status(400).json({error:err.message})    
         }
     },
    
@@ -39,27 +45,31 @@ module.exports = {
    
   async buscarSender(req, res) {
         try {
-          const money_transaction = await Money_transaction.findAll({where:{sender:req.params.sender}})
-          if(money_transaction == null){
-            throw new Error("Sender not found!")
-          }
-          return res.json(money_transaction)
+          const{pagina, tamanho} = req.query
+          const{limit, offset} = paginacao.getPaginacao(pagina,tamanho)
+          
+          await Money_transaction.findAndCountAll({where:{sender:req.params.sender}, limit, offset}).
+          then(dados => {
+              const response = paginacao.paginacaoDados(dados,pagina,limit)
+              res.send(response)})
         } catch (err) {
           return res.status(400).json({ error: err.message })
         }
-      },
+    },
     
   async buscarReceiver(req, res) {
         try {
-          const money_transaction = await Money_transaction.findAll({where:{receiver:req.params.receiver}})
-          if(money_transaction == null){
-            throw new Error("Receiver not found!")
-          }
-          return res.json(money_transaction)
+          const{pagina, tamanho} = req.query
+          const{limit, offset} = paginacao.getPaginacao(pagina,tamanho)
+      
+          await Money_transaction.findAndCountAll({where:{receiver:req.params.receiver}, limit, offset}).
+          then(dados => {
+              const response = paginacao.paginacaoDados(dados,pagina,limit)
+              res.send(response)})
         } catch (err) {
           return res.status(400).json({ error: err.message })
         }
-      },  
+    },  
     
   async atualizar(req, res) {
         try {
@@ -74,7 +84,7 @@ module.exports = {
         } catch (err) {
           return res.status(400).json({ error: err.message })
         }
-      },
+    },
     
   async deletar(req, res) {
         try {
