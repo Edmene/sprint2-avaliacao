@@ -1,5 +1,6 @@
 const TabelaProduto = require("./TabelaProduto");
-const NaoEncontrado = require("../../erros/NaoEncontrado")
+const NaoEncontrado = require("../../erros/NaoEncontrado");
+const Sequelize = require("sequelize");
 
 module.exports = {
     listar(){
@@ -23,6 +24,16 @@ module.exports = {
         }
 
         return encontradoId;
+    },
+
+    ListarPorNome(name){
+        console.log(name);
+        const Op = Sequelize.Op;
+        const newName = `${name}%`;
+        return TabelaProduto.findAll({
+            raw:true,
+            where:{name: {[Op.like]: newName}}
+        });
     },
 
     atualizar(id, dados){

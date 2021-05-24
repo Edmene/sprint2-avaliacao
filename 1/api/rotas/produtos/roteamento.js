@@ -1,7 +1,6 @@
 const TratarProduto = require("./TratarProduto");
 const Produto = require("./Produto");
 const SerializadorProduto = require("../../Serializador").SerializadorProduto;
-
 //separo uma rota do arquivo da api
 const roteador = require("express").Router();
 
@@ -76,6 +75,24 @@ roteador.get('/:idProduto', async (req, res, prox) => {
         prox(erro);
     }
 });
+
+roteador.get("/nome_produto/:nomeProduto", async(req, res, prox) => {
+    try{
+        const name = req.params.nomeProduto;
+        const resultados = await TratarProduto.ListarPorNome(name);
+        const serializador = new SerializadorProduto(
+            res.getHeader("Content-Type"),
+        );
+        res
+        .status(200)
+        .send(
+            serializador.serializar(resultados)
+        );
+    }catch(erro){
+        prox(erro);
+    }
+    
+})
 
 roteador.delete('/:idProduto', async (req, res, prox) => {
     try{

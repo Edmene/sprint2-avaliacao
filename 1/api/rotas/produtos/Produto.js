@@ -34,7 +34,7 @@ class Produto{
    
 
     async carregar(){
-        //carrego o meu produto pela id
+        //carrego o meu produto pela id        
         const produto = await TratarProduto.pegarId(this.id);
         this.name = produto.name;
         this.price = produto.price;
@@ -46,7 +46,6 @@ class Produto{
     }
 
     async atualizar(){
-        //
         await TratarProduto.pegarId(this.id);
         //separo quem vai ser número e quem vai ser string para ser possível a verificação
         const camposStrings = ["name", "category"];
