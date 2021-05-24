@@ -1,0 +1,13 @@
+{
+    "mysql":{
+        "comentario":"Configurações do banco de dados",
+        "bd": "evaluation",
+        "usuario": "root",
+        "senha": "123456",
+        "host": "localhost"
+    },
+    "api":{
+        "comentario":"Configurações da api",
+        "porta": 3000
+    }
+}
