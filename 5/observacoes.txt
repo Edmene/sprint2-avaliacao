@@ -1,0 +1,13 @@
+
+Modelo de insercao ou atualizacao .json que eu utilizei
+{
+    "sender" : "Sender1",
+    "sender_bank_account"  :"123456",
+    "receiver":"Receiver1",
+    "receiver_bank_account":"654321",
+    "amount":10.00 
+  }
+
+Na pasta database no arquivo index.js deixei o parametro da senha preenchido como "sua senha"
+Utilizei os pacotes npm express mysql2 sequelize
+  
