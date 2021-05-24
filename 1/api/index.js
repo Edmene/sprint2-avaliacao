@@ -6,7 +6,7 @@ const NaoEncontrado = require("./erros/NaoEncontrado");
 const CampoInvalido = require("./erros/CampoInvalido");
 const DadosNaoFornecidos = require("./erros/DadosNaoFornecidos");
 const SerializadorErro = require("./Serializador").SerializadorErro;
-const ValorNaoSuportado = require("./erros/ValorNaoSuportado");
+const ConteudoNaoSuportado = require("./erros/ConteudoNaoSuportado");
 
 const app = express();
 
@@ -53,7 +53,7 @@ app.use((erro, req, res, prox) => {
         status = 400;
     }
 
-    if(erro instanceof ValorNaoSuportado){
+    if(erro instanceof ConteudoNaoSuportado){
         status = 406;
     }
 

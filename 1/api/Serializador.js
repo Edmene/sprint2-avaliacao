@@ -1,4 +1,4 @@
-const ValorNaoSuportado = require("./erros/ValorNaoSuportado");
+const ConteudoNaoSuportado = require("./erros/ConteudoNaoSuportado");
 
 class Serializador{
     json(dados){
@@ -11,7 +11,7 @@ class Serializador{
             dados = this.filtrar(dados);
             return this.json(dados);
         }
-        throw new ValorNaoSuportado(this.contentType);
+        throw new ConteudoNaoSuportado(this.contentType);
     }
 
     filtrar(dados){
