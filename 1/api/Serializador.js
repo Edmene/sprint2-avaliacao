@@ -4,12 +4,42 @@ class Serializador{
     }
 
     serializar(dados){
+        //filtro o meu retorno
+        dados = this.filtrar(dados);
         if(this.contentType === "application/json"){
             return this.json(dados);
         }
 
         throw new Error("Conteúdo não suportado");
     }
+
+    filtrar(dados){
+        //verifico se foi passado um array de dados
+        if(Array.isArray(dados)){
+            //filtro o meu objeto
+            dados = dados.map(item => {
+                return this.filtrarObjeto(item)
+            })
+        }else{
+            dados = this.filtrarObjeto(dados);
+        }
+
+        return dados;
+    }
+
+    filtrarObjeto (dados){
+        const novoObjeto = {};
+
+        this.camposPublicos.forEach(campo => {
+            //verifico se existe uma propriedade de mesmo nome com o meu campo passado
+            if(dados.hasOwnProperty(campo)){
+                novoObjeto[campo] = dados[campo];
+            }
+        });
+
+        return novoObjeto;
+    }
+
 }
 
 //estendo as minhas funcionalidades

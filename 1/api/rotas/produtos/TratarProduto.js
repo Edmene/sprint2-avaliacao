@@ -4,7 +4,8 @@ const NaoEncontrado = require("../../erros/NaoEncontrado")
 module.exports = {
     listar(){
         //realizo a listagem utilizando o findAll do sequelize
-        return TabelaProduto.findAll();
+        //limpo e deixo o código puro como um js com raw:true
+        return TabelaProduto.findAll({raw:true});
     },
 
     inserir(produto){

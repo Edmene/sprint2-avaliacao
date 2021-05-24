@@ -3,6 +3,8 @@ const config = require("config");
 const criaTabelas = require('./bd/criarTabelas');
 const formatosAceitos = require("./Serializador").formatosAceitos;
 const NaoEncontrado = require("./erros/NaoEncontrado");
+const CampoInvalido = require("./erros/CampoInvalido");
+const DadosNaoFornecidos = require("./erros/DadosNaoFornecidos");
 const SerializadorErro = require("./Serializador").SerializadorErro;
 
 const app = express();
@@ -38,6 +40,9 @@ app.use((req, res, prox) => {
     prox();
 });
 
+const roteador = require("./rotas/produtos/roteamento");
+app.use("/api/produtos", roteador);
+
 app.use((erro, req, res, prox) => {
     let status = 500;
 
@@ -59,11 +64,8 @@ app.use((erro, req, res, prox) => {
             serializador.serializar({
                 mensagem: erro.message,
                 id: erro.idErro
-            })
+            }),
         );
 });
-
-const roteador = require("./rotas/produtos/roteamento");
-app.use("/api/produtos", roteador);
 
 app.listen(config.get("api.porta"), () => console.log("Estou no ar"));
