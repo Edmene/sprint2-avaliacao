@@ -32,7 +32,6 @@ class Serializador{
         const novoObjeto = {};
         this.camposPublicos.forEach(campo => {
             //verifico se existe uma propriedade de mesmo nome com o meu campo passado
-            console.log(dados.hasOwnProperty(campo));
             if(dados.hasOwnProperty(campo)){
                 novoObjeto[campo] = dados[campo];
             }
