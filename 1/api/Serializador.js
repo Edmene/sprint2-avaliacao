@@ -1,3 +1,5 @@
+const ValorNaoSuportado = require("./erros/ValorNaoSuportado");
+
 class Serializador{
     json(dados){
         return JSON.stringify(dados);
@@ -5,12 +7,11 @@ class Serializador{
 
     serializar(dados){
         //filtro o meu retorno
-        dados = this.filtrar(dados);
-        if(this.contentType === "application/json"){
+        if(this.contentType === "application/json"){   
+            dados = this.filtrar(dados);
             return this.json(dados);
         }
-
-        throw new Error("Conteúdo não suportado");
+        throw new ValorNaoSuportado(this.contentType);
     }
 
     filtrar(dados){

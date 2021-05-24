@@ -6,6 +6,7 @@ const NaoEncontrado = require("./erros/NaoEncontrado");
 const CampoInvalido = require("./erros/CampoInvalido");
 const DadosNaoFornecidos = require("./erros/DadosNaoFornecidos");
 const SerializadorErro = require("./Serializador").SerializadorErro;
+const ValorNaoSuportado = require("./erros/ValorNaoSuportado");
 
 const app = express();
 
@@ -24,8 +25,6 @@ app.use((req, res, prox) => {
     if(formatoRequisitado === "*/*"){
         formatoRequisitado = 'application/json';
     }
-
-    console.log(formatosAceitos);
 
     //verifico se o formato do request é um formato aceito
     if(formatosAceitos.indexOf(formatoRequisitado) === -1){
@@ -52,6 +51,10 @@ app.use((erro, req, res, prox) => {
 
     if(erro instanceof CampoInvalido || erro instanceof DadosNaoFornecidos){
         status = 400;
+    }
+
+    if(erro instanceof ValorNaoSuportado){
+        status = 406;
     }
 
     const serializador = new SerializadorErro(
