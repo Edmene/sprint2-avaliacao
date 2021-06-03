@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize')
 
 const conexao = new Sequelize(
-    'evaluation',
+    'EVALUATION',
     'root',
-    'sua senha',
+    'root',
     {
-        host:'localhost',
+        host:'mysql',
         dialect:"mysql"
     }
 )

@@ -2,8 +2,8 @@
     "mysql":{
         "banco-de-dados":"EVALUATION",
         "usuario":"root",
-        "senha":"admin",
-        "host":"127.0.0.1"
+        "senha":"root",
+        "host":"mysql"
     },
     "api":{
         "porta": 3000

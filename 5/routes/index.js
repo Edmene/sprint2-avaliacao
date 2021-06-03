@@ -1,5 +1,6 @@
 const roteador = require('express').Router()
 const money_transaction = require('../controller/MoneyTransactionController')
+const criarTabela = require("../database/criarTabela");
 
 //rota listar todos
 roteador.get('/money_transaction',money_transaction.listar)

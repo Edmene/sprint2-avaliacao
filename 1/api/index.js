@@ -1,5 +1,5 @@
 const customExpress = require("./app/customExpress");
-const criaTabelas = require('./bd/criarTabelas');
+const criaTabelas = require('./bd/CriarTabelas');
 const config = require("config");
 
 //crio as tabelas

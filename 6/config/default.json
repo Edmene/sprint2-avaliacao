@@ -4,10 +4,10 @@
     "limite":"10"
   },
   "db":{
-   "host":"localhost",
+   "host":"mysql",
    "port":"3306",
    "user":"root",
-   "password":"admin",
+   "password":"root",
    "banco":"EVALUATION"
   }
 }

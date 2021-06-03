@@ -10,7 +10,7 @@ const conexao = new Sequelizer(
 
     {
         host: config.get("mysql.host"),
-        port: 3307,
+        port: 3306,
         dialect: "mysql"
     }
 );

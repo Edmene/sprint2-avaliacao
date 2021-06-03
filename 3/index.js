@@ -1,6 +1,7 @@
 const express = require('express')  
 const bodyParser = require('body-parser')//transforma o body da requisicao em varios formatos
 const config = require('config')
+const criarTabelas = require("./banco-de-dados/criarTabelas")
 
 const roteador = require('./rotas')
 
@@ -9,4 +10,4 @@ app.use(bodyParser.json())
 
 app.use('/api', roteador)
 
-app.listen(config.get('api.porta'), () => console.log("api rodou"))
+app.listen(3000, () => console.log("api rodou"))
